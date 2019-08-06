@@ -1,8 +1,13 @@
-FROM tensorflow/tensorflow:1.12.0-devel-gpu-py3
+FROM tensorflow/tensorflow:latest-gpu-py3
 LABEL maintainer="giovanni.busonera@crs4.it"
 USER root
-RUN apt-get update \
-    && apt-get install -y vim libblas-dev libatlas-base-dev python3-pip libgeos-dev python-tifffile python-opencv python-h5py python3-tk iputils-ping\
+ENV TZ=Europe/Rome
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt update \
+    && apt dist-upgrade -y \
+    && apt install -y wget apt-utils vim libblas-dev libatlas-base-dev libopenslide0 python3-pip libgeos-dev python-tifffile python-opencv python-h5py python3-tk iputils-ping\
+    && wget https://github.com/computationalpathologygroup/ASAP/releases/download/1.9/ASAP-1.9-Linux-Ubuntu1804.deb \
+    && apt install -y ./ASAP-1.9-Linux-Ubuntu1804.deb \
     && pip3 install --upgrade --no-cache pip \
     && pip3 install --upgrade --no-cache keras \
     && pip3 install --upgrade --no-cache jupyter \
@@ -16,17 +21,22 @@ RUN apt-get update \
     && pip3 install --upgrade --no-cache pillow \
     && pip3 install --upgrade --no-cache matplotlib \ 
     && pip3 install --upgrade --no-cache opencv-python \
+    && pip3 install --upgrade --no-cache openslide-python\
     && pip3 install --no-cache --index-url https://test.pypi.org/simple/ spams \
-    && apt-get clean \
-    && apt-get autoremove -y \
+    && pip3 install --upgrade --no-cache joblib \
+    && pip3 install --upgrade --no-cache tqdm \
+    && pip3 install --upgrade --no-cache pywavelets \
+    && apt clean \
+    && apt autoremove -y \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/* \
     && useradd -m jupyter
+    
 
 WORKDIR /home/jupyter
 USER jupyter
 RUN mkdir .jupyter
 COPY --chown=jupyter jupyter_notebook_config.py .jupyter/
-
+ENV PYTHONPATH="/opt/ASAP/bin/:${PYTHONPATH}"
 WORKDIR notebooks
 
 EXPOSE 8888
