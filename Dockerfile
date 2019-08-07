@@ -28,7 +28,7 @@ RUN apt update \
     && pip3 install --upgrade --no-cache pywavelets \
     && apt clean \
     && apt autoremove -y \
-    && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/* \
+    && rm -rf /tmp/* /var/tmp/* \
     && useradd -m jupyter
     
 
