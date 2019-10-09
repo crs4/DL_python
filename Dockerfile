@@ -9,7 +9,7 @@ RUN apt update \
     && wget https://github.com/computationalpathologygroup/ASAP/releases/download/1.9/ASAP-1.9-Linux-Ubuntu1804.deb \
     && apt install -y ./ASAP-1.9-Linux-Ubuntu1804.deb \
     && pip3 install --upgrade --no-cache pip \
-    && pip3 install --upgrade --no-cache keras \
+    && pip3 install --upgrade --no-cache keras==2.2.5 \
     && pip3 install --upgrade --no-cache jupyter \
     && pip3 install --upgrade --no-cache pandas \ 
     && pip3 install --upgrade --no-cache sentinelsat \
@@ -26,6 +26,7 @@ RUN apt update \
     && pip3 install --upgrade --no-cache joblib \
     && pip3 install --upgrade --no-cache tqdm \
     && pip3 install --upgrade --no-cache pywavelets \
+    && pip3 install --upgrade --no-cache imutils \
     && apt clean \
     && apt autoremove -y \
     && rm -rf /tmp/* /var/tmp/* \
