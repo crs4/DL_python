@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu-py3
+FROM tensorflow/tensorflow:2.1.0-gpu-py3
 LABEL maintainer="giovanni.busonera@crs4.it"
 USER root
 ENV TZ=Europe/Rome
@@ -9,7 +9,7 @@ RUN apt update \
     && wget https://github.com/computationalpathologygroup/ASAP/releases/download/1.9/ASAP-1.9-Linux-Ubuntu1804.deb \
     && apt install -y ./ASAP-1.9-Linux-Ubuntu1804.deb \
     && pip3 install --upgrade --no-cache pip \
-    && pip3 install --upgrade --no-cache keras==2.2.5 \
+    && pip3 install --upgrade --no-cache keras \
     && pip3 install --upgrade --no-cache jupyter \
     && pip3 install --upgrade --no-cache pandas \ 
     && pip3 install --upgrade --no-cache sentinelsat \
