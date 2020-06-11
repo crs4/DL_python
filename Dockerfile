@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.1.0-gpu-py3
+FROM tensorflow/tensorflow:2.2.0-gpu
 LABEL maintainer="giovanni.busonera@crs4.it"
 USER root
 ENV TZ=Europe/Rome
@@ -21,7 +21,9 @@ RUN apt update \
     && pip3 install --upgrade --no-cache pillow \
     && pip3 install --upgrade --no-cache matplotlib \ 
     && pip3 install --upgrade --no-cache opencv-python \
+    && pip3 install setuptools==45.3.0 \
     && pip3 install --upgrade --no-cache openslide-python\
+    && pip3 install --upgrade setuptools \
     && pip3 install --no-cache --index-url https://test.pypi.org/simple/ spams \
     && pip3 install --upgrade --no-cache joblib \
     && pip3 install --upgrade --no-cache tqdm \
