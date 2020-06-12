@@ -4,8 +4,7 @@ USER root
 ENV TZ=Europe/Rome
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update \
-    && apt dist-upgrade -y \
-    && apt install -y wget apt-utils vim libblas-dev libatlas-base-dev libopenslide0 python3-pip libgeos-dev python-tifffile python-opencv python-h5py python3-tk iputils-ping\
+    && apt install -y wget apt-utils vim libblas-dev libatlas-base-dev libopenslide0 python3-pip libgeos-dev python-tifffile python-opencv python-h5py python3-tk iputils-ping python3-graphviz \
     && wget https://github.com/computationalpathologygroup/ASAP/releases/download/1.9/ASAP-1.9-Linux-Ubuntu1804.deb \
     && apt install -y ./ASAP-1.9-Linux-Ubuntu1804.deb \
     && pip3 install --upgrade --no-cache pip \
@@ -29,6 +28,7 @@ RUN apt update \
     && pip3 install --upgrade --no-cache tqdm \
     && pip3 install --upgrade --no-cache pywavelets \
     && pip3 install --upgrade --no-cache imutils \
+    && pip3 install --upgrade --no-cache pydot \
     && apt clean \
     && apt autoremove -y \
     && rm -rf /tmp/* /var/tmp/* \
